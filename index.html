@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1425" />
+  <meta name="description" content="Kiểm tra thông tin thiết bị và ứng dụng liên kết mà trình duyệt cho phép, không yêu cầu quyền truy cập." />
+  <title>PhoneScope · Kiểm tra điện thoại</title>
+  <style>
+    :root {color-scheme:dark;--bg:#0b1220;--panel:#151f32;--panel2:#1a2740;--line:#2a3852;--text:#eaf1ff;--muted:#a4b4d0;--cyan:#66e5d5;--yellow:#ffd48a;--red:#ff9c9c}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#1f3552 0%,transparent 35%),radial-gradient(circle at 0% 20%,#122d40 0%,transparent 35%),var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+    main{max-width:970px;margin:0 auto;padding:28px 18px 70px}header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:30px}.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:800;letter-spacing:.2px}.brand-icon{display:grid;place-items:center;border:1px solid #3b787b;background:#18323b;border-radius:15px;width:43px;height:43px;color:var(--cyan);font-size:24px}.tag{border:1px solid #3d565f;color:#b8e9dd;border-radius:999px;padding:6px 12px;font-size:12px;white-space:nowrap}
+    .hero{padding:20px 0 8px}.eyebrow{font-size:12px;letter-spacing:2px;color:var(--cyan);font-weight:800}.hero h1{font-size:clamp(32px,5vw,52px);line-height:1.11;letter-spacing:-1.3px;margin:11px 0 16px;max-width:790px}.hero p{font-size:16px;color:var(--muted);max-width:690px;margin:0 0 20px}.hero strong{color:#f3f6ff}
+    .action-row{display:flex;gap:10px;flex-wrap:wrap}.btn{appearance:none;border:1px solid transparent;border-radius:13px;padding:13px 19px;font-weight:760;cursor:pointer;font-size:14px;transition:transform .15s,background .15s}.btn:hover{transform:translateY(-1px)}.primary{background:var(--cyan);color:#07312e}.secondary{color:#d9eeff;background:#22314a;border-color:#405370}.btn:disabled{cursor:wait;opacity:.65;transform:none}
+    .notice{padding:14px 17px;background:#352b24;border:1px solid #736142;color:#ffe2b0;border-radius:15px;margin:24px 0 21px;display:flex;align-items:flex-start;gap:12px}.notice b{color:#fff3d6}.notice .symbol{font-size:21px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card{border:1px solid var(--line);background:rgba(21,31,50,.9);border-radius:20px;padding:20px;min-width:0}.card h2{display:flex;align-items:center;gap:9px;font-size:16px;letter-spacing:.1px;margin:0 0 15px}.label{color:var(--muted);font-size:13px}.value{font-size:15px;font-weight:650;overflow-wrap:anywhere;text-align:right}.item{display:flex;justify-content:space-between;align-items:start;gap:15px;border-top:1px solid #2b3a54;padding:10px 0}.item:first-child{border-top:none;padding-top:0}.full{grid-column:span 2}.small{font-size:13px;color:var(--muted)}.status{padding:11px 13px;border-radius:12px;background:#1b3440;color:#c1f5ed;font-size:14px;margin-bottom:13px}.status.warn{background:#403326;color:#ffe2ad}.status.err{background:#412d36;color:#ffb9c3}.hidden{display:none}.linked-list{margin:0;padding-left:18px}.linked-list li{margin:5px 0;overflow-wrap:anywhere}
+    .foot{margin-top:25px;border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:13px}.privacy{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cyan);margin-right:6px}.code{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#101a2c;border:1px solid #334361;color:#bad1ff;padding:1px 5px;border-radius:5px}
+    @media(max-width:660px){.grid{grid-template-columns:1fr}.full{grid-column:span 1}.hero h1{font-size:35px}.card{padding:17px}.tag{font-size:11px;padding:6px 9px}main{padding:18px 14px 55px}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div class="brand"><div class="brand-icon" aria-hidden="true">▣</div>PhoneScope</div><span class="tag">Không yêu cầu cấp quyền</span></header>
+  <section class="hero">
+    <div class="eyebrow">KIỂM TRA TRÊN TRÌNH DUYỆT</div>
+    <h1>Xem những gì website thực sự biết về điện thoại</h1>
+    <p>Trang này hoạt động trực tiếp trên điện thoại, <strong>không cài ứng dụng</strong> và không xin quyền truy cập. Nó kiểm tra thông tin môi trường và khả năng phát hiện <strong>ứng dụng có liên kết hợp lệ với website</strong>, nếu trình duyệt hỗ trợ.</p>
+    <div class="action-row"><button id="scanBtn" class="btn primary" type="button">◉ Bắt đầu kiểm tra</button><button id="saveBtn" class="btn secondary" type="button" disabled>↓ Lưu kết quả JSON</button></div>
+  </section>
+  <div class="notice" role="note"><span class="symbol" aria-hidden="true">⚠</span><span><b>Giới hạn bảo mật:</b> Không website thông thường nào có thể quét hoặc liệt kê toàn bộ app đã cài chỉ bằng một URL mà không có quyền truy cập thích hợp. Nếu có trang tuyên bố làm được, hãy thận trọng.</span></div>
+  <div class="grid">
+    <section class="card"><h2>📱 Thông tin thiết bị</h2><div id="deviceRows"><div class="small">Nhấn “Bắt đầu kiểm tra” để xem kết quả.</div></div></section>
+    <section class="card"><h2>🌐 Môi trường trình duyệt</h2><div id="browserRows"><div class="small">Thông tin sẽ được đọc từ trình duyệt, không qua máy chủ.</div></div></section>
+    <section class="card full"><h2>📦 Phát hiện ứng dụng liên kết</h2><div id="appStatus" class="status warn" role="status">Chưa kiểm tra.</div><ul id="relatedApps" class="linked-list hidden"></ul><div class="small">API <span class="code">getInstalledRelatedApps()</span> chỉ trả về ứng dụng đã được xác minh là có liên kết với website/PWA. Không thể dùng để liệt kê TikTok, Zalo, Facebook hoặc mọi ứng dụng bất kỳ trên máy. Danh sách trống <b>không có nghĩa</b> điện thoại không có ứng dụng.</div></section>
+    <section class="card full"><h2>🔒 Quyền riêng tư & giới hạn</h2><div class="item"><span class="label">Xin quyền truy cập danh bạ, file, camera, vị trí?</span><span class="value">Không</span></div><div class="item"><span class="label">Gửi thông tin lên máy chủ?</span><span class="value">Không</span></div><div class="item"><span class="label">Đọc danh sách tất cả ứng dụng?</span><span class="value" style="color:var(--yellow)">Không thể qua web thường</span></div><div class="item"><span class="label">Muốn kiểm kê đủ ứng dụng?</span><span class="value">Dùng Android app được phép truy cập hoặc ADB đã ủy quyền</span></div></section>
+  </div>
+  <footer class="foot"><div class="privacy"><span><span class="dot"></span>Mọi thao tác chạy trên máy của bạn.</span><span>Không lưu cookie, không gửi dữ liệu, không có thư viện bên thứ ba.</span></div></footer>
+</main>
+<script>
+(()=>{
+  'use strict';
+  const $=id=>document.getElementById(id);
+  let lastReport=null;
+  const text=(v)=>v===null||v===undefined||v===''?'Không khả dụng':String(v);
+  const row=(name,value)=>{const d=document.createElement('div');d.className='item';const label=document.createElement('span');label.className='label';label.textContent=name;const result=document.createElement('span');result.className='value';result.textContent=text(value);d.append(label,result);return d};
+  function renderRows(id,entries){const root=$(id);root.replaceChildren(...entries.map(([k,v])=>row(k,v)))}
+  const guessPlatform=ua=>/iPad|iPhone|iPod/i.test(ua)?'iOS / iPadOS':/Android/i.test(ua)?'Android':/Windows/i.test(ua)?'Windows':/Macintosh|Mac OS X/i.test(ua)?'macOS':/Linux/i.test(ua)?'Linux':'Chưa xác định';
+  const guessBrowser=ua=>/EdgA?\//.test(ua)?'Microsoft Edge':/OPR\/|Opera/.test(ua)?'Opera':/SamsungBrowser\//.test(ua)?'Samsung Internet':/FxiOS|Firefox\//.test(ua)?'Firefox':/CriOS|Chrome\//.test(ua)?'Google Chrome':/Safari\//.test(ua)?'Safari':'Không xác định';
+  async function scan(){
+    $('scanBtn').disabled=true;$('scanBtn').textContent='Đang kiểm tra…';$('appStatus').className='status';$('appStatus').textContent='Đang hỏi trình duyệt về các ứng dụng liên kết…';$('relatedApps').classList.add('hidden');$('relatedApps').replaceChildren();
+    const ua=navigator.userAgent||'';
+    const report={checkedAt:new Date().toISOString(),platform:guessPlatform(ua),browser:guessBrowser(ua),language:navigator.language||null,screen:{width:screen.width,height:screen.height,devicePixelRatio:devicePixelRatio||1},logicalCpuCores:navigator.hardwareConcurrency||null,deviceMemoryGiB:navigator.deviceMemory||null,standalone:window.matchMedia?.('(display-mode: standalone)').matches||false,secureContext:isSecureContext,installedRelatedApps:[],relatedAppsStatus:'unavailable'};
+    renderRows('deviceRows',[
+      ['Hệ điều hành (ước đoán)',report.platform],['Loại thiết bị',/Mobi|Android|iPhone/i.test(ua)?'Điện thoại / máy tính bảng':'Máy tính hoặc thiết bị khác'],['Độ phân giải CSS',`${report.screen.width} × ${report.screen.height}`],['Tỷ lệ pixel',report.screen.devicePixelRatio],['Luồng CPU (ước lượng)',report.logicalCpuCores],['RAM (ước lượng)',report.deviceMemoryGiB?`${report.deviceMemoryGiB} GB`:'Không khả dụng']
+    ]);
+    renderRows('browserRows',[
+      ['Trình duyệt (ước đoán)',report.browser],['Ngôn ngữ',report.language],['Chế độ ứng dụng PWA',report.standalone?'Có':'Không'],['Ngữ cảnh bảo mật HTTPS',report.secureContext?'Có':'Không'],['API ứng dụng liên kết',typeof navigator.getInstalledRelatedApps==='function'?'Có':'Không']
+    ]);
+    const status=$('appStatus');
+    try{
+      if(typeof navigator.getInstalledRelatedApps!=='function'){
+        report.relatedAppsStatus='not-supported';status.className='status warn';status.textContent='Trình duyệt này không hỗ trợ API phát hiện ứng dụng liên kết.';
+      } else {
+        const apps=await navigator.getInstalledRelatedApps();report.installedRelatedApps=apps.map(a=>({id:a.id||null,platform:a.platform||null,url:a.url||null,version:a.version||null}));report.relatedAppsStatus='completed';
+        if(!apps.length){status.className='status warn';status.textContent='Không có ứng dụng liên kết hợp lệ được trả về. Đây không phải danh sách ứng dụng cài trên điện thoại.'}
+        else{status.className='status';status.textContent=`Phát hiện ${apps.length} ứng dụng liên kết hợp lệ với trang này:`;const list=$('relatedApps');for(const app of apps){const li=document.createElement('li');li.textContent=`${app.id||app.url||'Không rõ tên'} · ${app.platform||'nền tảng khác'}`;list.append(li)}list.classList.remove('hidden')}
+      }
+    }catch(error){report.relatedAppsStatus='error';status.className='status err';status.textContent='Không thể kiểm tra ứng dụng liên kết: '+(error?.message||'Lỗi trình duyệt');}
+    lastReport=report;$('saveBtn').disabled=false;$('scanBtn').disabled=false;$('scanBtn').textContent='↻ Kiểm tra lại';
+  }
+  $('scanBtn').addEventListener('click',scan);
+  $('saveBtn').addEventListener('click',()=>{if(!lastReport)return;const blob=new Blob([JSON.stringify(lastReport,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='phonescope-report.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)});
+})();
+</script>
+</body>
+</html>
